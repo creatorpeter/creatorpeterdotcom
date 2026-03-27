@@ -82,7 +82,7 @@
 						<!-- Contact -->
 							<article id="contact">
 							<h2 class="major">Contact</h2>
-							<form method="POST" action="https://formspree.io/f/xzdjnvnn" target="-blank">
+							<form id="my-form" method="POST" action="https://formspree.io/f/xzdjnvnn" target="-blank">
 								<div class="fields">
 									<div class="field half">
 										<label for="name">Name</label>
@@ -102,6 +102,9 @@
 									<li><input type="submit" value="Send Message" class="primary" /></li>
 									<li><input type="reset" value="Reset" /></li>
 								</ul>
+ 							    
+ 							    <p id="my-form-status"></p>
+
 							</form>
 							<ul class="icons">
 								<li><a href="https://www.instagram.com/creatorpeterfilms/" class="icon brands fa-instagram" target="_blank"></a> <span class="label">Instagram</span></a></li>
@@ -371,3 +374,38 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 	</body>
 </html>
+
+<script>
+  var form = document.getElementById("my-form");
+  
+  async function handleSubmit(event) {
+    event.preventDefault();
+    var status = document.getElementById("my-form-status");
+    var data = new FormData(event.target);
+    
+    fetch(event.target.action, {
+      method: form.method,
+      body: data,
+      headers: {
+          'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        status.innerHTML = "Thanks! Your message has been sent.";
+        form.reset(); // Clears the form after success
+      } else {
+        response.json().then(data => {
+          if (Object.hasOwn(data, 'errors')) {
+            status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+          } else {
+            status.innerHTML = "Oops! There was a problem submitting your form";
+          }
+        })
+      }
+    }).catch(error => {
+      status.innerHTML = "Oops! There was a problem submitting your form";
+    });
+  }
+  
+  form.addEventListener("submit", handleSubmit);
+</script>
