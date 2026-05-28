@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bridal Shower — CreatorPeter</title>
+  <title>Bridal Shower Recap</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -33,9 +33,10 @@
     .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
 
+    /* PROJECT HEADER */
     .project-header {
       padding: 9rem 3rem 3.5rem;
-      max-width: 1100px; margin: 0 auto;
+      max-width: 900px; margin: 0 auto;
     }
     .breadcrumb {
       display: flex; align-items: center; gap: 0.5rem;
@@ -66,102 +67,83 @@
     .meta-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); font-weight: 400; }
     .meta-value { font-size: 0.85rem; color: var(--text-mid); font-weight: 300; }
 
-    /* PHOTO GALLERY */
-    .gallery-wrap { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
-
-    /* Hero image — full width */
-    .gallery-hero {
-      width: 100%; aspect-ratio: 16/9;
-      background: var(--bg3); overflow: hidden; margin-bottom: 1px;
+    /* VIDEO EMBED */
+    .video-wrap {
+      max-width: 900px; margin: 0 auto; padding: 0 3rem;
     }
-    .gallery-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-    /* Masonry-style grid */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
+    .video-container {
+      position: relative; padding-bottom: 56.25%; /* 16:9 */
+      background: var(--bg3); border: 1px solid var(--border-md);
     }
-    .photo-item {
+    .video-container iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; border: none;
+    }
+    /* YouTube fallback link styled nicely */
+    .video-fallback {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1rem;
       background: var(--bg3);
-      overflow: hidden; cursor: pointer; position: relative;
     }
-    .photo-item.tall { grid-row: span 2; }
-    .photo-item.wide { grid-column: span 2; }
-    .photo-item img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
-      min-height: 220px;
+    .video-fallback p { font-size: 0.82rem; color: var(--text-dim); }
+    .video-fallback a {
+      font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); text-decoration: none; border: 1px solid var(--accent-lt);
+      padding: 0.5rem 1.25rem; transition: background 0.2s, color 0.2s;
     }
-    .photo-item:hover img { transform: scale(1.03); }
-    .photo-placeholder {
-      position: absolute; inset: 0; min-height: 220px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
-    }
-
-    /*
-      HOW TO ADD YOUR PHOTOS:
-      1. Create a folder: images/projects/bridal-shower/
-      2. Add your photos there (JPG, optimized to ~300-500KB each for fast loading)
-      3. Replace the src attributes below with your image paths
-      4. Add or remove <div class="photo-item"> blocks as needed
-      5. Use class="tall" for portrait photos, class="wide" for landscape ones
-
-      TIP: Keep filenames lowercase with hyphens: bridal-001.jpg, bridal-002.jpg etc.
-    */
-
-    /* LIGHTBOX */
-    .lightbox {
-      display: none; position: fixed; inset: 0; z-index: 200;
-      background: rgba(10,9,8,0.95); cursor: pointer;
-      align-items: center; justify-content: center;
-    }
-    .lightbox.open { display: flex; }
-    .lightbox img {
-      max-width: 90vw; max-height: 90vh;
-      object-fit: contain; cursor: default;
-    }
-    .lightbox-close {
-      position: fixed; top: 1.5rem; right: 2rem;
-      font-size: 1.5rem; color: rgba(255,255,255,0.5);
-      cursor: pointer; transition: color 0.2s; line-height: 1;
-      background: none; border: none; font-family: var(--sans);
-    }
-    .lightbox-close:hover { color: #fff; }
-    .lightbox-nav {
-      position: fixed; top: 50%; transform: translateY(-50%);
-      font-size: 1.5rem; color: rgba(255,255,255,0.4);
-      cursor: pointer; transition: color 0.2s;
-      background: none; border: none; padding: 1rem;
-    }
-    .lightbox-nav:hover { color: #fff; }
-    .lightbox-prev { left: 1rem; }
-    .lightbox-next { right: 1rem; }
-    .lightbox-counter {
-      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-      font-size: 0.72rem; letter-spacing: 0.12em; color: rgba(255,255,255,0.35);
-      text-transform: uppercase;
-    }
+    .video-fallback a:hover { background: var(--accent); color: #fff; }
 
     /* PROJECT BODY */
     .project-body {
-      max-width: 1100px; margin: 0 auto;
+      max-width: 900px; margin: 0 auto;
       padding: 3.5rem 3rem 7rem;
-      display: grid; grid-template-columns: 1fr 260px; gap: 4rem; align-items: start;
+      display: grid; grid-template-columns: 1fr 280px; gap: 4rem; align-items: start;
     }
-    .project-description h2 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; margin-bottom: 1rem; color: var(--text); }
+    .project-description h2 {
+      font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
+      margin-bottom: 1rem; color: var(--text);
+    }
     .project-description h2 em { font-style: italic; color: var(--accent); }
-    .project-description p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.85; font-weight: 300; margin-bottom: 1rem; }
+    .project-description p {
+      font-size: 0.92rem; color: var(--text-muted); line-height: 1.85;
+      font-weight: 300; margin-bottom: 1rem;
+    }
     .project-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
-    .sidebar-block { background: var(--bg2); border: 1px solid var(--border); padding: 1.25rem; }
-    .sidebar-block-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); font-weight: 400; margin-bottom: 0.75rem; }
+    .sidebar-block {
+      background: var(--bg2); border: 1px solid var(--border);
+      padding: 1.25rem;
+    }
+    .sidebar-block-label {
+      font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-dim); font-weight: 400; margin-bottom: 0.75rem;
+    }
     .sidebar-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .sidebar-tag { font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-mid); background: var(--bg3); border: 1px solid var(--border-md); padding: 0.28rem 0.65rem; font-weight: 400; }
+    .sidebar-tag {
+      font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-mid); background: var(--bg3); border: 1px solid var(--border-md);
+      padding: 0.28rem 0.65rem; font-weight: 400;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.8rem; color: var(--accent); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .sidebar-link:hover { color: var(--text); }
+    .sidebar-link::after { content: '↗'; font-size: 0.75rem; }
 
-    .project-nav { border-top: 1px solid var(--border); max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
-    .project-nav-link { background: var(--bg); padding: 1.75rem 2rem; text-decoration: none; color: var(--text); transition: background 0.2s; display: flex; flex-direction: column; gap: 0.35rem; }
+    /* NEXT/PREV NAV */
+    .project-nav {
+      border-top: 1px solid var(--border);
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+    }
+    .project-nav-link {
+      background: var(--bg); padding: 1.75rem 2rem;
+      text-decoration: none; color: var(--text);
+      transition: background 0.2s; display: flex; flex-direction: column; gap: 0.35rem;
+    }
     .project-nav-link:hover { background: var(--accent-bg); }
     .project-nav-link.next { text-align: right; }
     .nav-dir { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
@@ -176,16 +158,11 @@
     @media (max-width: 900px) {
       nav { padding: 1.25rem 1.5rem; }
       .nav-links { gap: 1.5rem; }
-      .project-header, .gallery-wrap { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .project-header, .video-wrap { padding-left: 1.5rem; padding-right: 1.5rem; }
       .project-header { padding-top: 7rem; }
-      .photo-grid { grid-template-columns: repeat(2, 1fr); }
-      .photo-item.wide { grid-column: span 2; }
       .project-body { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem 1.5rem 5rem; }
+      .project-nav { margin: 0; }
       footer { flex-direction: column; gap: 0.75rem; padding: 2rem 1.5rem; text-align: center; }
-    }
-    @media (max-width: 500px) {
-      .photo-grid { grid-template-columns: 1fr; }
-      .photo-item.wide, .photo-item.tall { grid-column: span 1; grid-row: span 1; }
     }
   </style>
 </head>
@@ -204,18 +181,18 @@
   <div class="breadcrumb">
     <a href="/work/">Work</a>
     <span>/</span>
-    <span>Bridal Shower</span>
+    <span>Bridal Shower Recap</span>
   </div>
-  <p class="project-tag">Event Photography · Bridal Shower</p>
-  <h1>Bridal Shower<br><em>Photography</em></h1>
+  <p class="project-tag">Short Form · Bridal Shower</p>
+  <h1>Bridal Shower<br><em>Recap</em></h1>
   <div class="project-meta">
     <div class="meta-item">
       <span class="meta-label">Client</span>
-      <span class="meta-value">Private Event</span>
+      <span class="meta-value">Bride</span>
     </div>
     <div class="meta-item">
       <span class="meta-label">Type</span>
-      <span class="meta-value">Event Photography</span>
+      <span class="meta-value">Short-Form Video</span>
     </div>
     <div class="meta-item">
       <span class="meta-label">Location</span>
@@ -223,107 +200,71 @@
     </div>
     <div class="meta-item">
       <span class="meta-label">Year</span>
-      <span class="meta-value">2025</span>
+      <span class="meta-value">2026</span>
     </div>
   </div>
 </div>
 
-<!-- GALLERY -->
-<div class="gallery-wrap reveal">
+<!-- VIDEO -->
+<!-- 
+  HOW TO USE VIMEO:
+  1. Upload your video to vimeo.com
+  2. Go to the video → Share → Embed
+  3. Copy the video ID from the URL (e.g. vimeo.com/123456789 → ID is 123456789)
+  4. Replace YOUR_VIMEO_ID below with that number
 
-  <!-- Hero image — replace src with your best shot from this shoot -->
-  <div class="gallery-hero">
-    <img src="/images/projects/bridal-shower/hero.jpg" alt="Bridal Shower"
-      onerror="this.parentElement.style.background='var(--bg3)'; this.style.display='none'" />
-  </div>
+  HOW TO USE YOUTUBE:
+  1. Go to your YouTube video
+  2. Click Share → Embed
+  3. Copy the video ID (e.g. youtube.com/watch?v=Z-emowfg2qA → ID is Z-emowfg2qA)
+  4. Replace the src below with: https://www.youtube.com/embed/YOUR_VIDEO_ID
+-->
+<div class="video-wrap reveal">
+  <div class="video-container">
 
-  <!-- Photo grid — add/remove items freely, use class="tall" for portrait, class="wide" for landscape spanning 2 cols -->
-  <div class="photo-grid" id="photo-grid">
-    <div class="photo-item wide" data-src="/images/projects/bridal-shower/01.jpg">
-      <img src="/images/projects/bridal-shower/01.jpg" alt="Bridal Shower" onerror="this.style.display='none'" />
-      <div class="photo-placeholder">01</div>
-    </div>
-    <div class="photo-item tall" data-src="/images/projects/bridal-shower/02.jpg">
-      <img src="/images/projects/bridal-shower/02.jpg" alt="Bridal Shower" onerror="this.style.display='none'" />
-      <div class="photo-placeholder">02</div>
-    </div>
-    <div class="photo-item" data-src="/images/projects/bridal-shower/03.jpg">
-      <img src="/images/projects/bridal-shower/03.jpg" alt="Bridal Shower" onerror="this.style.display='none'" />
-      <div class="photo-placeholder">03</div>
-    </div>
-    <div class="photo-item" data-src="/images/projects/bridal-shower/04.jpg">
-      <img src="/images/projects/bridal-shower/04.jpg" alt="Bridal Shower" onerror="this.style.display='none'" />
-      <div class="photo-placeholder">04</div>
-    </div>
-    <div class="photo-item wide" data-src="/images/projects/bridal-shower/05.jpg">
-      <img src="/images/projects/bridal-shower/05.jpg" alt="Bridal Shower" onerror="this.style.display='none'" />
-      <div class="photo-placeholder">05</div>
-    </div>
-    <div class="photo-item" data-src="/images/projects/bridal-shower/06.jpg">
-      <img src="/images/projects/bridal-shower/06.jpg" alt="Bridal Shower" onerror="this.style.display='none'" />
-      <div class="photo-placeholder">06</div>
-    </div>
-    <div class="photo-item tall" data-src="/images/projects/bridal-shower/07.jpg">
-      <img src="/images/projects/bridal-shower/07.jpg" alt="Bridal Shower" onerror="this.style.display='none'" />
-      <div class="photo-placeholder">07</div>
-    </div>
-    <div class="photo-item" data-src="/images/projects/bridal-shower/08.jpg">
-      <img src="/images/projects/bridal-shower/08.jpg" alt="Bridal Shower" onerror="this.style.display='none'" />
-      <div class="photo-placeholder">08</div>
-    </div>
-    <div class="photo-item" data-src="/images/projects/bridal-shower/09.jpg">
-      <img src="/images/projects/bridal-shower/09.jpg" alt="Bridal Shower" onerror="this.style.display='none'" />
-      <div class="photo-placeholder">09</div>
-    </div>
-    <!-- Add more photo-item divs here following the same pattern -->
+    <!-- OPTION A: Vimeo (recommended — no ads, clean player) -->
+    <iframe src="https://vimeo.com/1196431211?fl=ip&fe=ec" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe> 
+
+    <!-- OPTION B: YouTube (swap in if you prefer) 
+    <iframe src="https://www.youtube.com/embed/Z-emowfg2qA?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
+
   </div>
 </div>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lb-close">×</button>
-  <button class="lightbox-nav lightbox-prev" id="lb-prev">‹</button>
-  <img src="" alt="" id="lb-img" />
-  <button class="lightbox-nav lightbox-next" id="lb-next">›</button>
-  <div class="lightbox-counter" id="lb-counter"></div>
-</div>
-
-<!-- BODY -->
+<!-- PROJECT BODY -->
 <div class="project-body">
   <div class="project-description reveal">
     <h2>About the <em>project</em></h2>
     <p>A fun and casual bridal shower celebration photographed in Miami. The brief was to keep things natural and candid — capturing genuine moments and the energy of the event rather than posed shots.</p>
     <p>Shot in available light with a documentary approach, the goal was to give the client a gallery that feels real and alive, not staged.</p>
-    <!-- Edit your project description here -->
+    <!-- Add or edit your project description here -->
   </div>
   <aside class="project-sidebar reveal">
     <div class="sidebar-block">
       <p class="sidebar-block-label">Services</p>
       <div class="sidebar-tags">
-        <span class="sidebar-tag">Photography</span>
-        <span class="sidebar-tag">Event Coverage</span>
+        <span class="sidebar-tag">Videography</span>
         <span class="sidebar-tag">Editing</span>
-        <span class="sidebar-tag">Culling</span>
+        <span class="sidebar-tag">Color Grade</span>
+        <span class="sidebar-tag">Audio Mix</span>
       </div>
     </div>
     <div class="sidebar-block">
-      <p class="sidebar-block-label">Deliverables</p>
-      <div class="sidebar-tags">
-        <span class="sidebar-tag">Full Gallery</span>
-        <span class="sidebar-tag">High-Res JPGs</span>
-      </div>
+      <p class="sidebar-block-label">Watch on Vimeo</p>
+      <a href="https://vimeo.com/1196431211?fl=ip&fe=ec" target="_blank" class="sidebar-link">Full video</a>
     </div>
   </aside>
 </div>
 
+<!-- PREV / NEXT -->
 <div class="project-nav">
   <a href="/work/" class="project-nav-link">
     <span class="nav-dir">← Back</span>
     <span class="nav-title">All Work</span>
   </a>
-  <a href="/work/crypto-monday/" class="project-nav-link next">
+  <a href="/work/ponce-park/" class="project-nav-link next">
     <span class="nav-dir">Next →</span>
-    <span class="nav-title">Crypto Monday</span>
+    <span class="nav-title">Ponce Park Preconstruction</span>
   </a>
 </div>
 
@@ -333,43 +274,6 @@
 </footer>
 
 <script>
-  // Lightbox
-  const items    = Array.from(document.querySelectorAll('.photo-item[data-src]'));
-  const lightbox = document.getElementById('lightbox');
-  const lbImg    = document.getElementById('lb-img');
-  const lbCount  = document.getElementById('lb-counter');
-  let current    = 0;
-
-  function openLightbox(index) {
-    current = index;
-    lbImg.src = items[current].dataset.src;
-    lbCount.textContent = (current + 1) + ' / ' + items.length;
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function step(dir) {
-    current = (current + dir + items.length) % items.length;
-    lbImg.src = items[current].dataset.src;
-    lbCount.textContent = (current + 1) + ' / ' + items.length;
-  }
-
-  items.forEach((item, i) => item.addEventListener('click', () => openLightbox(i)));
-  document.getElementById('lb-close').addEventListener('click', closeLightbox);
-  document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
-  document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); step(1); });
-  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', e => {
-    if (!lightbox.classList.contains('open')) return;
-    if (e.key === 'ArrowLeft')  step(-1);
-    if (e.key === 'ArrowRight') step(1);
-    if (e.key === 'Escape')     closeLightbox();
-  });
-
-  // Reveals
   const revealEls = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
