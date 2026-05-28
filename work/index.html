@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work — CreatorPeter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #faf9f6; --bg2: #f3f1ec; --bg3: #eceae3;
+      --text: #1a1a18; --text-mid: #4a4845; --text-muted: #8a8780; --text-dim: #b8b5ae;
+      --accent: #8a6a42; --accent-lt: #c9a97a; --accent-bg: #f5efe6;
+      --border: rgba(0,0,0,0.08); --border-md: rgba(0,0,0,0.13);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Outfit', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 3rem;
+      background: rgba(250,249,246,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--serif); font-size: 1.25rem; color: var(--text); text-decoration: none; font-weight: 400; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 9rem 3rem 3rem;
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: flex-end;
+      gap: 2rem;
+    }
+    .page-header-left {}
+    .eyebrow {
+      font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); font-weight: 400;
+      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;
+    }
+    .eyebrow::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent-lt); }
+    .page-header h1 { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; }
+    .page-header h1 em { font-style: italic; color: var(--accent); }
+    .back-link { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; white-space: nowrap; }
+    .back-link:hover { color: var(--text); }
+    .back-link::before { content: '←'; }
+
+    /* TABS */
+    .tabs-wrap { max-width: 1200px; margin: 0 auto; padding: 0 3rem; border-bottom: 1px solid var(--border); }
+    .tabs { display: flex; gap: 0; }
+    .tab-btn {
+      font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 400; color: var(--text-dim); background: none; border: none;
+      padding: 1rem 0; margin-right: 2.5rem; cursor: pointer;
+      border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+      position: relative; bottom: -1px;
+    }
+    .tab-btn:hover { color: var(--text-mid); }
+    .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+
+    /* GRID */
+    .grid-wrap { max-width: 1200px; margin: 0 auto; padding: 3rem 3rem 7rem; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .project-card {
+      background: var(--bg);
+      text-decoration: none;
+      color: var(--text);
+      display: flex; flex-direction: column;
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card:hover { background: var(--accent-bg); }
+    .project-thumb {
+      width: 100%; aspect-ratio: 16/10;
+      background: var(--bg3);
+      overflow: hidden; position: relative;
+    }
+    .project-thumb img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .project-card:hover .project-thumb img { transform: scale(1.04); }
+    .project-thumb-placeholder {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+    }
+    /* Video play icon overlay */
+    .play-badge {
+      position: absolute; bottom: 0.75rem; left: 0.75rem;
+      background: rgba(10,9,8,0.7); backdrop-filter: blur(4px);
+      padding: 0.25rem 0.6rem;
+      font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.85); font-weight: 400;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .play-badge::before { content: '▶'; font-size: 0.5rem; }
+    .project-info { padding: 1.25rem 1.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.35rem; flex: 1; }
+    .project-tag { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 400; }
+    .project-title { font-size: 0.95rem; font-weight: 400; color: var(--text); line-height: 1.4; }
+    .project-desc { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; line-height: 1.6; margin-top: 0.1rem; }
+    .project-arrow {
+      position: absolute; top: 1rem; right: 1rem;
+      font-size: 0.85rem; color: var(--text-dim);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .project-card:hover .project-arrow { color: var(--accent); transform: translate(2px,-2px); }
+
+    /* Featured card (spans 2 cols) */
+    .project-card.featured { grid-column: span 2; }
+    .project-card.featured .project-thumb { aspect-ratio: 21/9; }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1; padding: 5rem 2rem; text-align: center;
+      font-size: 0.85rem; color: var(--text-dim); font-style: italic;
+    }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 2.25rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-size: 0.75rem; color: var(--text-dim); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .page-header { padding: 7rem 1.5rem 2rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .tabs-wrap { padding: 0 1.5rem; }
+      .grid-wrap { padding: 2rem 1.5rem 5rem; }
+      .project-grid { grid-template-columns: 1fr 1fr; }
+      .project-card.featured { grid-column: 1 / -1; }
+      footer { flex-direction: column; gap: 0.75rem; padding: 2rem 1.5rem; }
+    }
+    @media (max-width: 580px) {
+      .project-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CreatorPeter</a>
+  <ul class="nav-links">
+    <li><a href="/work/" class="active">Work</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-left">
+    <p class="eyebrow">Portfolio</p>
+    <h1>Selected <em>work</em></h1>
+  </div>
+  <a href="/" class="back-link">Back to home</a>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="motion">Motion</button>
+    <button class="tab-btn" data-tab="stills">Stills</button>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="grid-wrap">
+
+  <!-- MOTION TAB -->
+  <div class="tab-panel active" id="tab-motion">
+    <div class="project-grid reveal">
+
+      <!-- Featured project -->
+      <a href="/work/showreel/" class="project-card featured">
+        <div class="project-thumb">
+          <img src="/images/thumbs/showreel.jpg" alt="2024 Showreel" onerror="this.style.display='none'" />
+          <div class="project-thumb-placeholder">Showreel</div>
+          <div class="play-badge">Reel · 2026</div>
+        </div>
+        <div class="project-info">
+          <p class="project-tag">Demo Reel</p>
+          <p class="project-title">2026 Portfolio Showreel</p>
+          <p class="project-desc">A look at the full range of work — events, real estate, lifestyle, and branded content.</p>
+        </div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <a href="/work/coral-gables/" class="project-card">
+        <div class="project-thumb">
+          <img src="/images/thumbs/coral-gables.jpg" alt="Coral Gables" onerror="this.style.display='none'" />
+          <div class="project-thumb-placeholder">Coral Gables</div>
+          <div class="play-badge">Long Form</div>
+        </div>
+        <div class="project-info">
+          <p class="project-tag">Long Form · Real Estate</p>
+          <p class="project-title">Coral Gables Neighborhood Tour</p>
+          <p class="project-desc">Cinematic walkthrough for a real estate client.</p>
+        </div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <a href="/work/ponce-park/" class="project-card">
+        <div class="project-thumb">
+          <img src="/images/thumbs/ponce-park.jpg" alt="Ponce Park" onerror="this.style.display='none'" />
+          <div class="project-thumb-placeholder">Ponce Park</div>
+          <div class="play-badge">Long Form</div>
+        </div>
+        <div class="project-info">
+          <p class="project-tag">Long Form · Real Estate</p>
+          <p class="project-title">Ponce Park Preconstruction</p>
+          <p class="project-desc">Development video communicating vision before construction begins.</p>
+        </div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <a href="/work/terrible-guest/" class="project-card">
+        <div class="project-thumb">
+          <img src="/images/thumbs/terrible-guest.jpg" alt="Terrible Guest" onerror="this.style.display='none'" />
+          <div class="project-thumb-placeholder">Terrible Guest</div>
+          <div class="play-badge">Short Form</div>
+        </div>
+        <div class="project-info">
+          <p class="project-tag">Short Form · Property Management</p>
+          <p class="project-title">Terrible Guest — Awareness Series</p>
+          <p class="project-desc">Scripted short-form series for a property management brand.</p>
+        </div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <a href="/work/revenue-campaign/" class="project-card">
+        <div class="project-thumb">
+          <img src="/images/thumbs/revenue.jpg" alt="Revenue Campaign" onerror="this.style.display='none'" />
+          <div class="project-thumb-placeholder">Revenue Campaign</div>
+          <div class="play-badge">Short Form</div>
+        </div>
+        <div class="project-info">
+          <p class="project-tag">Short Form · Property Management</p>
+          <p class="project-title">Revenue Increase Campaign</p>
+          <p class="project-desc">Educational short-form breaking down rental income strategies.</p>
+        </div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <a href="/work/bridal-shower-recap/" class="project-card">
+        <div class="project-thumb">
+          <img src="/images/thumbs/bridal-recap.jpg" alt="Bridal Shower Recap" onerror="this.style.display='none'" />
+          <div class="project-thumb-placeholder">Bridal Shower Recap</div>
+          <div class="play-badge">Event Recap</div>
+        </div>
+        <div class="project-info">
+          <p class="project-tag">Event Videography · Bridal Shower</p>
+          <p class="project-title">Bridal Shower Event Recap</p>
+          <p class="project-desc">Full event recap video documenting the celebration.</p>
+        </div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- STILLS TAB -->
+  <div class="tab-panel" id="tab-stills">
+    <div class="project-grid reveal">
+
+      <a href="/work/bridal-shower-photos/" class="project-card featured">
+        <div class="project-thumb">
+          <img src="/images/thumbs/bridal-shower.jpg" alt="Bridal Shower" onerror="this.style.display='none'" />
+          <div class="project-thumb-placeholder">Bridal Shower</div>
+        </div>
+        <div class="project-info">
+          <p class="project-tag">Event Photography · Bridal Shower</p>
+          <p class="project-title">Bridal Shower — Full Gallery</p>
+          <p class="project-desc">Fun and casual bridal shower party coverage, Miami.</p>
+        </div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <a href="/work/crypto-monday/" class="project-card">
+        <div class="project-thumb">
+          <img src="/images/thumbs/crypto-monday.jpg" alt="Crypto Monday" onerror="this.style.display='none'" />
+          <div class="project-thumb-placeholder">Crypto Monday</div>
+        </div>
+        <div class="project-info">
+          <p class="project-tag">Event Photography · Networking</p>
+          <p class="project-title">Crypto Monday</p>
+          <p class="project-desc">Professional networking event revolving around Bitcoin and crypto investment.</p>
+        </div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <!-- Add more stills projects here -->
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 CreatorPeter — Peter Nguyen</p>
+  <p>Miami, Florida</p>
+</footer>
+
+<script>
+  // Tabs
+  const tabBtns   = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Reveals
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  revealEls.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
